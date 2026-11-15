@@ -227,8 +227,10 @@ impl Transport for Stdio {
             .write_all(line.as_bytes())
             .and_then(|()| self.stdin.flush())
             .map_err(|e| ToolError::new(ErrorCode::EngineMissing, format!("The {} plugin stopped: {e}", self.name)));
-        // A write fails when the server has already exited: say what it printed instead.
-        if sent.is_err() && self.process.is_finished() {
+        // A write fails when the server has already exited: say what it printed instead. The pipe
+        // closes a moment before the exit is recorded, so give it that moment rather than only
+        // looking once (seen in CI as "Broken pipe" in place of the exit code).
+        if sent.is_err() && self.process.wait_timeout(Duration::from_millis(500)).is_some() {
             return Err(self.exited());
         }
         sent
