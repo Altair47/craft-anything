@@ -329,8 +329,9 @@ only when it's green and a maintainer has fully reviewed it, code as well as wor
       adapters unchanged
       — claimed: Claude, branch bugfix/r5.2-warp-texture-filtering
 - [ ] Report WARP's sampling cost upstream (egui-wgpu: leave the sampler out of the pipeline when it
-      filters by hand; wgpu: why WARP samples slowly, the sampler heap being the suspect), then drop
-      `vendor/egui-wgpu`
+      filters by hand; wgpu: why WARP samples slowly, the sampler heap being the suspect). Drop
+      `vendor/egui-wgpu` only once an upstream fix ships and the before/after WARP measurement in
+      `vendor/egui-wgpu/CRAFT_ANYTHING.md` shows no regression
 - [x] STATUS.md has rows twice, kept by squash merges of PRs that edited the same row: OpenCode
       models and thinking (three copies that disagree about SSH), Claude desktop app without Claude
       Code, Websites as targets, Desktop app and CLI; `docs/opencode.md` has a paragraph twice.
